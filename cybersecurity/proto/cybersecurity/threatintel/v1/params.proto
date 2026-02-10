@@ -1,0 +1,13 @@
+syntax = "proto3";
+package cybersecurity.threatintel.v1;
+
+import "amino/amino.proto";
+import "gogoproto/gogo.proto";
+
+option go_package = "cybersecurity/x/threatintel/types";
+
+// Params defines the parameters for the module.
+message Params {
+  option (amino.name) = "cybersecurity/x/threatintel/Params";
+  option (gogoproto.equal) = true;
+}

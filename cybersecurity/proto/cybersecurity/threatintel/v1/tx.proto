@@ -1,0 +1,74 @@
+syntax = "proto3";
+
+package cybersecurity.threatintel.v1;
+
+import "amino/amino.proto";
+import "cosmos/msg/v1/msg.proto";
+import "cosmos_proto/cosmos.proto";
+import "cybersecurity/threatintel/v1/params.proto";
+import "gogoproto/gogo.proto";
+
+option go_package = "cybersecurity/x/threatintel/types";
+
+// Msg defines the Msg service.
+service Msg {
+  option (cosmos.msg.v1.service) = true;
+
+  // UpdateParams defines a (governance) operation for updating the module
+  // parameters. The authority defaults to the x/gov module account.
+  rpc UpdateParams(MsgUpdateParams) returns (MsgUpdateParamsResponse);
+
+  // SubmitThreatReport defines the SubmitThreatReport RPC.
+  rpc SubmitThreatReport(MsgSubmitThreatReport) returns (MsgSubmitThreatReportResponse);
+
+  // StoreMaliciousIp defines the StoreMaliciousIp RPC.
+  rpc StoreMaliciousIp(MsgStoreMaliciousIp) returns (MsgStoreMaliciousIpResponse);
+}
+
+// MsgUpdateParams is the Msg/UpdateParams request type.
+message MsgUpdateParams {
+  option (cosmos.msg.v1.signer) = "authority";
+  option (amino.name) = "cybersecurity/x/threatintel/MsgUpdateParams";
+
+  // authority is the address that controls the module (defaults to x/gov unless overwritten).
+  string authority = 1 [(cosmos_proto.scalar) = "cosmos.AddressString"];
+
+  // params defines the module parameters to update.
+
+  // NOTE: All parameters must be supplied.
+  Params params = 2 [
+    (gogoproto.nullable) = false,
+    (amino.dont_omitempty) = true
+  ];
+}
+
+// MsgUpdateParamsResponse defines the response structure for executing a
+// MsgUpdateParams message.
+message MsgUpdateParamsResponse {}
+
+// MsgSubmitThreatReport defines the MsgSubmitThreatReport message.
+message MsgSubmitThreatReport {
+  option (cosmos.msg.v1.signer) = "creator";
+  string creator = 1 [(cosmos_proto.scalar) = "cosmos.AddressString"];
+}
+
+// MsgSubmitThreatReportResponse defines the MsgSubmitThreatReportResponse message.
+message MsgSubmitThreatReportResponse {
+  string report_id = 1;
+  string status = 2;
+  int64 timestamp = 3;
+}
+
+// MsgStoreMaliciousIp defines the MsgStoreMaliciousIp message.
+message MsgStoreMaliciousIp {
+  option (cosmos.msg.v1.signer) = "creator";
+  string creator = 1 [(cosmos_proto.scalar) = "cosmos.AddressString"];
+  string ip_address =2;
+}
+
+// MsgStoreMaliciousIpResponse defines the MsgStoreMaliciousIpResponse message.
+message MsgStoreMaliciousIpResponse {
+  string ip_hash = 1;
+  bool consensus_required = 2;
+  int64 timestamp = 3;
+}

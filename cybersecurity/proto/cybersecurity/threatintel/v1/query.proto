@@ -1,0 +1,53 @@
+syntax = "proto3";
+
+package cybersecurity.threatintel.v1;
+
+import "amino/amino.proto";
+import "cosmos/base/query/v1beta1/pagination.proto";
+import "cybersecurity/threatintel/v1/params.proto";
+import "gogoproto/gogo.proto";
+import "google/api/annotations.proto";
+
+option go_package = "cybersecurity/x/threatintel/types";
+
+// Query defines the gRPC querier service.
+service Query {
+  // Parameters queries the parameters of the module.
+  rpc Params(QueryParamsRequest) returns (QueryParamsResponse) {
+    option (google.api.http).get = "/cybersecurity/threatintel/v1/params";
+  }
+
+  // ListThreatReports Queries a list of ListThreatReports items.
+  rpc ListThreatReports(QueryListThreatReportsRequest) returns (QueryListThreatReportsResponse) {
+    option (google.api.http).get = "/cybersecurity/threatintel/v1/list_threat_reports";
+  }
+
+rpc ListMaliciousIps(QueryListMaliciousIpsRequest) returns (QueryListMaliciousIpsResponse) {
+    option (google.api.http).get = "/cybersecurity/threatintel/v1/list_malicious_ips";
+  }
+}
+
+// QueryParamsRequest is request type for the Query/Params RPC method.
+message QueryParamsRequest {}
+
+// QueryParamsResponse is response type for the Query/Params RPC method.
+message QueryParamsResponse {
+  // params holds all the parameters of this module.
+  Params params = 1 [
+    (gogoproto.nullable) = false,
+    (amino.dont_omitempty) = true
+  ];
+}
+
+// QueryListThreatReportsRequest defines the QueryListThreatReportsRequest message.
+message QueryListThreatReportsRequest {}
+
+// QueryListThreatReportsResponse defines the QueryListThreatReportsResponse message.
+message QueryListThreatReportsResponse {
+  string reports = 1;
+}
+message QueryListMaliciousIpsRequest {}
+
+message QueryListMaliciousIpsResponse {
+  repeated string ips = 1;
+}
