@@ -1,0 +1,21 @@
+nohup: ignoring input
+[dotenv@17.2.4] injecting env (0) from .env -- tip: 🔐 prevent committing .env to code: https://dotenvx.com/precommit
+Starting ML-to-Blockchain integration...
+
+🚨 New malicious activity detected:
+   Timestamp: 2026-02-11T12:41:05.268972
+   Type: Benign
+[2026-02-11T07:46:38.853Z] Submitting anomaly to blockchain...
+  Source IP: 192.168.1.100
+  Attack Type: Benign
+  Using sequence number: 1
+✓ Successfully submitted anomaly to blockchain.
+
+🚨 New malicious activity detected:
+   Timestamp: 2026-02-11T13:16:55.333030
+   Type: Benign
+[2026-02-11T07:46:58.856Z] Submitting anomaly to blockchain...
+  Source IP: 10.0.0.5
+  Attack Type: Benign
+  Using sequence number: 1
+✓ Successfully submitted anomaly to blockchain.

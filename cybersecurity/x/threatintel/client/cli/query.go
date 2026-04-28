@@ -22,9 +22,6 @@ func GetQueryCmd(queryRoute string) *cobra.Command {
 		RunE:                       client.ValidateCmd,
 	}
 
-	// Add the command to query module parameters
-	cmd.AddCommand(CmdQueryParams())
-
 	// Add the command to list malicious IPs
 	cmdListMaliciousIps := &cobra.Command{
 		Use:   "list-malicious-ips",

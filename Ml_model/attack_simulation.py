@@ -4,14 +4,32 @@ import threading
 import time
 import sys
 
-TARGET_URL = "http://127.0.0.1:8080"
+TARGET_URL = "http://127.0.0.1:5000/analyze-flow"
 DURATION_SECONDS = 30
 REQUESTS_PER_SECOND = 50  # Adjust based on system capability
 
 def send_requests(stop_event):
+    # Simulated flow data that mimics a DoS pattern.
+    # The API expects {"features": {...}} with the ML model's column names.
+    flow_data = {
+        "features": {
+            "IPV4_SRC_ADDR": "192.168.1.105",
+            "IPV4_DST_ADDR": "10.0.0.1",
+            "L4_SRC_PORT": 12345,
+            "L4_DST_PORT": 80,
+            "PROTOCOL": 6,
+            "FLOW_DURATION_MILLISECONDS": 1,
+            "IN_BYTES": 999999,
+            "OUT_BYTES": 0,
+            "IN_PKTS": 1000,
+            "OUT_PKTS": 0,
+            "TCP_FLAGS": 2,
+            "TOTAL_FLOWS_EXP": 50000,
+        }
+    }
     while not stop_event.is_set():
         try:
-            response = requests.get(TARGET_URL, timeout=1)
+            response = requests.post(TARGET_URL, json=flow_data, timeout=1)
             status = response.status_code
             if status == 403:
                 print(f"🔥 BLOCK CONFIRMED! Server returned 403 Forbidden.")
